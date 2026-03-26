@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FactCheck Pro | World Bank Group</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Landing Screen -->
+    <div class="landing-overlay" id="landing-screen">
+        <div class="landing-content">
+            <header class="landing-header">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h1>FactCheck Pro</h1>
+                <span>Choose your workflow to begin</span>
+            </header>
+
+            <div class="mode-cards">
+                <div class="mode-card" id="mode-drafter">
+                    <div class="mode-icon"><i class="fa-solid fa-pen-nib"></i></div>
+                    <div class="mode-title">Draft & Discover</div>
+                    <div class="mode-desc">Write speech drafts and let verify engine automatically generate and validate citations for statistics as you go.</div>
+                    <button class="btn btn-primary btn-block">Enter Workbench</button>
+                </div>
+
+                <div class="mode-card" id="mode-auditor">
+                    <div class="mode-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <div class="mode-title">Citation Auditor</div>
+                    <div class="mode-desc">Upload existing reports with linked citations to verify if URLs are live and semantically accurate to claims.</div>
+                    <button class="btn btn-primary btn-block">Enter Auditor</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Workspace (Hidden on Load) -->
+    <div class="dashboard-wrapper hidden" id="drop-zone">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>FactCheck Pro</span>
+            </div>
+            
+            <div class="divider"></div>
+
+            <div class="divider"></div>
+
+            <!-- Drag & Drop Zone -->
+            <div class="upload-zone" id="upload-trigger">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <p>Drag & Drop Speech</p>
+                <small>PDF or Word (.docx)</small>
+                <input type="file" id="file-input" hidden accept=".pdf,.docx">
+            </div>
+
+            <div class="spacer"></div>
+            
+            <!-- Settings / Modes -->
+            <div class="settings-box">
+                <label class="section-title">Verification Mode</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="mode" value="grounding" checked>
+                        <div class="radio-custom"></div>
+                        <div class="radio-text">
+                            <strong>Google Search</strong>
+                            <span>General web grounding</span>
+                        </div>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="mode" value="function_calling">
+                        <div class="radio-custom"></div>
+                        <div class="radio-text">
+                            <strong>World Bank Database</strong>
+                            <span>Expert Function Calling</span>
+                        </div>
+                    </label>
+                </div>
+            </div> <!-- Close settings-box -->
+            <div class="divider"></div>
+            <div class="exit-box" style="margin-top: auto; padding-top: 1rem;">
+                <button class="btn btn-secondary btn-block" id="exit-btn">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Switch Workspace
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="breadcrumbs">FactCheck Pro / <strong>Workbench</strong></div>
+                <div class="user-profile">
+                    <i class="fa-solid fa-building-columns"></i>
+                    <span>World Bank User</span>
+                </div>
+            </header>
+
+            <div class="workbench">
+                <!-- Editor Panel -->
+                <div class="document-panel card">
+                    <div class="card-header">
+                        <h2>Speech Draft</h2>
+                        <div class="header-controls">
+                             <span class="badge badge-neutral" id="word-count">0 Words</span>
+                             <span class="file-status" id="file-label">Blank Slate</span>
+                        </div>
+                    </div>
+                    <div class="editor-container">
+                        <textarea id="editor" placeholder="Type your draft here or drop a file to begin..."></textarea>
+                        <div id="annotated-editor" class="hidden"></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary" id="verify-btn">
+                            <i class="fa-solid fa-bolt"></i> Verify Claims
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results/Analysis Panel -->
+                <div class="analysis-panel card">
+                    <div class="card-header">
+                        <h2>Verification & Results</h2>
+                        <div class="stats" id="stats-view">
+                             <span class="badge badge-neutral">0 claims</span>
+                             <button class="btn btn-secondary btn-sm" id="export-pdf-btn" disabled>
+                                 <i class="fa-solid fa-file-pdf"></i> Export Citations
+                             </button>
+                        </div>
+                    </div>
+                    
+                    <div class="analysis-body" id="analysis-content">
+                        <div class="empty-state">
+                            <i class="fa-solid fa-glasses"></i>
+                            <p>No text analyzed yet.</p>
+                            <span>Paste text or drop a file and click "Verify Claims".</span>
+                        </div>
+                    </div>
+
+                    <div class="logs-section">
+                        <label class="section-title"><i class="fa-solid fa-arrow-trend-up"></i> Agent Reasoning Log</label>
+                        <div class="log-output" id="log-output">
+                            <div class="log-item">System Idle. Waiting for input...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
